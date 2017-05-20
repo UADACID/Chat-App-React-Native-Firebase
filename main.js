@@ -2,46 +2,36 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
+  Platform,
 } from 'react-native';
-import { StackNavigator } from 'react-navigation';
+import { StackNavigator, TabNavigator } from 'react-navigation';
+import Login from './scene/Login';
+import Register from './scene/Register';
+import Chat from './scene/Chat';
+import Setting from './scene/Setting';
+import Contact from './scene/Contact';
+import store from './store';
 
-class Main extends Component {
+const isLogin = store.isLogin();
 
-  static navigationOptions = {
-    title: 'Welcome',
-  };
-
-  render (){
-    const {navigate} = this.props.navigation;
-    return (
-      <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
-        <Text onPress={()=>navigate('Second',{ user: 'Pratama' })}>
-          Hello World
-        </Text>
-      </View>
-    )
+const TabView = TabNavigator({
+  Chat    : { screen: Chat },
+  Contact : { screen: Contact },
+  Setting : { screen: Setting}
+},{
+  tabBarPosition:'bottom',
+  tabBarOptions:{
+    showIcon:true,
+    showLabel:Platform.OS == 'ios' ? true : false
   }
-}
-
-class Second extends Component {
-
-  static navigationOptions = ({ navigation }) => ({
-    title: `Chat with ${navigation.state.params.user} on Here`,
-  });
-
-  render (){
-    const { params } = this.props.navigation.state;
-    return (
-      <Text>
-        Hello {params.user}
-      </Text>
-    )
-  }
-}
-
-const RouteApp = StackNavigator({
-  Home    : { screen: Main },
-  Second  : { screen: Second },
 });
 
-export default RouteApp;
+const RootApp = StackNavigator({
+  TabView   : { screen: TabView },
+  Login     : { screen: Login },
+  Register  : { screen: Register },
+},{
+  initialRouteName : isLogin ? 'TabView' : 'Login'
+});
+
+export default RootApp;
