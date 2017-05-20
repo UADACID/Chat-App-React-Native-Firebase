@@ -7,16 +7,18 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default class Chat extends Component {
 
-  static navigationOptions = {
-    title: 'Chat List',
-    headerRight: <Text>Add</Text>,
+  static navigationOptions = ({ navigation }) => ({
+    title: 'Chatting',
+    headerRight:
+      <View style={{marginRight:15}}>
+        <Ionicons onPress={()=>navigation.navigate('AddChat',{ title: 'Search' })} name='md-add-circle' size={26} color='#446CB3'/>
+      </View>,
     tabBarIcon: ({ tintColor, focused }) => (
-    <Ionicons name={focused ? 'ios-chatboxes' : 'ios-chatboxes-outline'}
-      size={26}
-      style={{ color: tintColor }}/>
-    ),
-    showIcon:true
-  };
+      <Ionicons name={focused ? 'ios-chatboxes' : 'ios-chatboxes-outline'}
+        size={26}
+        style={{ color: tintColor }}/>
+      ),
+  });
 
   render (){
     const {navigate} = this.props.navigation;

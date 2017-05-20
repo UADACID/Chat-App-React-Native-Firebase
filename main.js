@@ -14,22 +14,31 @@ import store from './store';
 
 const isLogin = store.isLogin();
 
+
+const tabBarOptions = {
+  showIcon:true,
+  showLabel:Platform.OS == 'ios' ? true : false,
+  style: {
+    backgroundColor: Platform.OS == 'ios' ? 'white' : '#446CB3',
+  },
+}
+
+const TabNavigatorConfig = {
+  tabBarPosition:Platform.OS == 'ios' ? 'bottom' : 'top',
+    tabBarOptions
+}
+
 const TabView = TabNavigator({
   Chat    : { screen: Chat },
   Contact : { screen: Contact },
   Setting : { screen: Setting}
-},{
-  tabBarPosition:'bottom',
-  tabBarOptions:{
-    showIcon:true,
-    showLabel:Platform.OS == 'ios' ? true : false
-  }
-});
+}, TabNavigatorConfig);
 
 const RootApp = StackNavigator({
   TabView   : { screen: TabView },
   Login     : { screen: Login },
   Register  : { screen: Register },
+  AddChat   : { screen: Contact}
 },{
   initialRouteName : isLogin ? 'TabView' : 'Login'
 });

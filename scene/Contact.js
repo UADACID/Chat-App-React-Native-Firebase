@@ -7,15 +7,19 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default class Contact extends Component {
 
-  static navigationOptions = {
+  static navigationOptions = ({ navigation }) => ({
     title: 'Contact',
+    headerRight:
+      <View style={{marginRight:15}}>
+        <Ionicons onPress={()=>navigation.navigate('Contact')} name='ios-person-add' size={26} color='#446CB3'/>
+      </View>,
     tabBarIcon: ({ tintColor, focused }) => (
-    <Ionicons
-      name={focused ? 'ios-people' : 'ios-people-outline'}
-      size={26}
-      style={{ color: tintColor }}/>
-  ),
-  };
+        <Ionicons
+          name={focused ? 'ios-people' : 'ios-people-outline'}
+          size={26}
+          style={{ color: tintColor }}/>
+      ),
+  });
 
   componentDidMount(){
     // alert("wkwkwkkw")
