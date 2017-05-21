@@ -64,7 +64,7 @@ export default class Chat extends Component {
   )
 
   _renderRow = ({item, index}) => (
-    <ListItem avatar onPress={()=>this.props.navigation.navigate('Message',{ user: item.username })}>
+    <ListItem avatar onPress={()=>this.props.navigation.navigate('Message',{ user: item.username, avatar:item.avatar })}>
       <Left>
           <Thumbnail source={{uri:item.avatar}} />
       </Left>

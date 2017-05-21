@@ -22,11 +22,12 @@ export default class Message extends Component {
   constructor(){
     super();
     this.heightIos = height-110;
-
+    this.fakeData = [];
     this.state = {
       listHeight: this.heightIos,
-      fakeData : [],
-      limit:100
+      data:[],
+      limit:100,
+      text:""
     };
 
     this.handleBack = this.handleBack.bind(this);
@@ -52,12 +53,16 @@ export default class Message extends Component {
     }
 
     ListChat.forEach((item)=>{
-      this.state.fakeData.push({
+      this.fakeData.push({
         avatar: faker.image.avatar(),
         username: faker.name.findName(),
         lastMessage: faker.lorem.lines(),
         isCurentLogin: faker.random.boolean(),
       })
+    })
+
+    this.setState({
+      data:this.fakeData
     })
   }
 
@@ -98,25 +103,44 @@ export default class Message extends Component {
           onPress={navigation.state.params.handleBack}
           name='keyboard-arrow-left' size={30} color='#446CB3'/>
       </View>,
+    headerRight:
+      <View style={{marginRight:15}}>
+        <Thumbnail style={{height:30, width:30, borderRadius:15}} source={{uri:navigation.state.params.avatar}} />
+      </View>,
   });
 
   _keyExtractor = (item, index) => index;
 
   _renderRow = ({item, index}) => (
-    <ListItem style={{ transform: [{ scaleY: -1 }]}}>
+    <ListItem
+      onPress={()=>alert("bisa di pencet loh")}
+      style={{ transform: [{ scaleY: -1 }], borderBottomWidth:0}}>
       <Left>
-          {item.isCurentLogin ? <Text note>3:43 pm</Text> : <Thumbnail style={{height:30, width:30, borderRadius:15}} source={{uri:item.avatar}} /> }
+          {item.isCurentLogin ? <Text note>3:43 pm</Text> : <Thumbnail style={{height:30, width:30, borderRadius:15}} source={{uri:this.props.navigation.state.params.avatar}} /> }
       </Left>
-      <Body style={item.isCurentLogin ? {alignItems:'flex-end'} : {alignItems:'flex-start'}}>
+      <Body style={item.isCurentLogin ? {alignItems:'flex-end',borderBottomWidth:0} : {alignItems:'flex-start', borderBottomWidth:0}}>
         <View style={[{padding:5, borderRadius:15}, item.isCurentLogin ? {backgroundColor:'#52B3D9', borderTopRightRadius:0} : {backgroundColor:'#C5EFF7', borderTopLeftRadius:0}]}>
           <Text style={item.isCurentLogin ? {textAlign:'right', color:'#FFF'} : {textAlign:'left', color:'#000'}}>{item.lastMessage}...</Text>
         </View>
       </Body>
-      <Right>
-          {item.isCurentLogin ? <Thumbnail style={{height:30, width:30, borderRadius:15}} source={{uri:item.avatar}} /> : <Text note>3:43 pm</Text> }
+      <Right style={{borderBottomWidth:0}}>
+          {item.isCurentLogin ? false : <Text note>3:43 pm</Text> }
       </Right>
     </ListItem>
   );
+
+  handleSend(){
+    this.fakeData.push({
+      avatar: faker.image.avatar(),
+      username: "PratamaX",
+      lastMessage: this.state.text,
+      isCurentLogin: true,
+    })
+    this.setState({
+      data:this.fakeData,
+      text:""
+    })
+  }
 
   render (){
     const { navigation } = this.props;
@@ -127,7 +151,7 @@ export default class Message extends Component {
           <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
             <View style={[Platform.OS == 'ios' ? {height: currentHeight} : {flex:2}]}>
               <FlatList
-                data={this.state.fakeData.slice(0, this.state.limit)}
+                data={this.state.data.reverse()}
                 renderItem={this._renderRow}
                 keyExtractor={this._keyExtractor}
                 style={{  transform: [{ scaleY: -1 }] }}
@@ -141,9 +165,13 @@ export default class Message extends Component {
                 <Input
                   style={{marginLeft:10}}
                   placeholderTextColor='#DADFE1'
-                  placeholder='Search chat'/>
+                  onChangeText={(text) => this.setState({text})}
+                  value={this.state.text}
+                  placeholder='Type message . . .'/>
             </Item>
-            <TouchableOpacity style={{justifyContent:'center'}}>
+            <TouchableOpacity
+              onPress={()=>this.handleSend()}
+              style={{justifyContent:'center'}}>
               <Text style={{color:'#446CB3'}}>
                 Send
               </Text>
