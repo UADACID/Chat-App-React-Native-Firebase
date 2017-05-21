@@ -11,7 +11,7 @@ export default class Contact extends Component {
     title: 'Contact',
     headerRight:
       <View style={{marginRight:15}}>
-        <Ionicons onPress={()=>navigation.navigate('Contact')} name='ios-person-add' size={26} color='#446CB3'/>
+        <Ionicons onPress={()=>alert('Add Contact')} name='ios-person-add' size={26} color='#446CB3'/>
       </View>,
     tabBarIcon: ({ tintColor, focused }) => (
         <Ionicons

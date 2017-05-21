@@ -41,10 +41,10 @@ export default class Message extends Component {
   }
 
   render (){
-    const { navigate } = this.props.navigation;
+    const { navigation } = this.props;
     return (
       <Text onPress={()=>this.handleBack()}>
-        Hai Pratama
+        Hi {navigation.state.params.user} ...
       </Text>
     )
   }

@@ -25,7 +25,7 @@ const tabBarOptions = {
 }
 
 const TabNavigatorConfig = {
-  tabBarPosition:Platform.OS == 'ios' ? 'bottom' : 'top',
+  tabBarPosition:'bottom',
     tabBarOptions
 }
 
