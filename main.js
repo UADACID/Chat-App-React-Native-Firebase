@@ -10,6 +10,7 @@ import Register from './scene/Register';
 import Chat from './scene/Chat';
 import Setting from './scene/Setting';
 import Contact from './scene/Contact';
+import Message from './scene/Message';
 import store from './store';
 
 const isLogin = store.isLogin();
@@ -38,7 +39,8 @@ const RootApp = StackNavigator({
   TabView   : { screen: TabView },
   Login     : { screen: Login },
   Register  : { screen: Register },
-  AddChat   : { screen: Contact}
+  Message   : { screen: Message },
+  AddChat   : { screen: Contact }
 },{
   initialRouteName : isLogin ? 'TabView' : 'Login'
 });

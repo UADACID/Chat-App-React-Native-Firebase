@@ -29,7 +29,7 @@ export default class Contact extends Component {
     const {navigate} = this.props.navigation;
     return (
       <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
-        <Text onPress={()=>navigate('Register',{ user: 'Pratama' })}>
+        <Text onPress={()=>navigate('Message',{ user: 'Pratama' })}>
           Contact View
         </Text>
       </View>
