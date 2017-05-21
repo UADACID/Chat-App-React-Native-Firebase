@@ -77,9 +77,19 @@ export default class Message extends Component {
       listHeight:this.state.listHeight-keyBoardHeight,
     })
 
+    //must be remove soon
+    this.setState({
+      listHeight:this.state.listHeight,
+    })
+
   }
 
   _keyboardDidHide () {
+    this.setState({
+      listHeight:this.heightIos,
+    })
+
+    //must be remove soon
     this.setState({
       listHeight:this.heightIos,
     })
