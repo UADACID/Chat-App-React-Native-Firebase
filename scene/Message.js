@@ -2,9 +2,15 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
+  Dimensions,
+  Platform,
+  TouchableOpacity,
+  KeyboardAvoidingView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { NavigationActions } from 'react-navigation';
+import { Input, Item, } from 'native-base';
+var {height, width} = Dimensions.get('window');
 
 export default class Message extends Component {
 
@@ -43,9 +49,32 @@ export default class Message extends Component {
   render (){
     const { navigation } = this.props;
     return (
-      <Text onPress={()=>this.handleBack()}>
-        Hi {navigation.state.params.user} ...
-      </Text>
+      <KeyboardAvoidingView behavior={'padding'} style={{flex:1}}>
+      <View style={{flex:1}}>
+
+        <View style={[{borderWidth:1}, Platform.OS == 'ios' ? {flex:2.5} : {flex:2}]}>
+          <Text>
+            asdasd
+          </Text>
+        </View>
+        <View style={{flex:.2, borderWidth:1, flexDirection:'row'}}>
+          <Item
+            style={{height:40, width:width-60, backgroundColor:'#FFF', marginRight:5, marginLeft:5}}
+            rounded>
+              <Input
+                style={{marginLeft:10}}
+                placeholderTextColor='#DADFE1'
+                placeholder='Search chat'/>
+          </Item>
+          <TouchableOpacity style={{justifyContent:'center'}}>
+            <Text style={{color:'#446CB3'}}>
+              Send
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+      </View>
+        </KeyboardAvoidingView>
     )
   }
 }
