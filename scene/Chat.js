@@ -63,9 +63,7 @@ export default class Chat extends Component {
     })
   )
 
-
-
-  renderRow = ({item, index}) => (
+  _renderRow = ({item, index}) => (
     <ListItem avatar onPress={()=>this.props.navigation.navigate('Message',{ user: item.username })}>
       <Left>
           <Thumbnail source={{uri:item.avatar}} />
@@ -86,7 +84,7 @@ export default class Chat extends Component {
       <View style={{flex:1, backgroundColor:'#FFF'}}>
         <FlatList
           data={this.state.fakeData.slice(0, this.state.limit)}
-          renderItem={this.renderRow}
+          renderItem={this._renderRow}
           keyExtractor={this._keyExtractor}
           ListHeaderComponent={InputSearch}
           onEndReached={this._onEndScroll}
