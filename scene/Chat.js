@@ -7,6 +7,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { ListItem, Left, Body, Right, Text, Thumbnail } from 'native-base';
 import ListChat from '../data/ListChat';
 import InputSearch from '../component/InputSearch';
+var faker = require('faker');
 
 export default class Chat extends Component {
 
@@ -14,7 +15,8 @@ export default class Chat extends Component {
     super();
     this.limiter = 10;
     this.state = {
-      limit : this.limiter
+      limit : this.limiter,
+      fakeData : [],
     }
 
     this._onEndScroll = this._onEndScroll.bind(this);
@@ -34,11 +36,20 @@ export default class Chat extends Component {
   });
 
   componentWillMount(){
-    for (var i = 0; i < 1000; i++) {
+    // console.log(faker.name.findName());
+    for (var i = 0; i < 100; i++) {
       ListChat.push({
         username:'Tester'+i
       })
     }
+
+    ListChat.forEach((item)=>{
+      this.state.fakeData.push({
+        avatar: faker.image.avatar(),
+        username: faker.name.findName(),
+        lastMessage: faker.lorem.words()
+      })
+    })
   }
 
   _keyExtractor = (item, index) => index;
@@ -55,11 +66,11 @@ export default class Chat extends Component {
   renderRow = ({item, index}) => (
     <ListItem avatar onPress={()=>this.props.navigation.navigate('Message',{ user: item.username })}>
       <Left>
-          <Thumbnail source={{uri:'https://gooddonegreat.com/app/img/placeholders/avatar-150x150.png'}} />
+          <Thumbnail source={{uri:item.avatar}} />
       </Left>
       <Body>
           <Text>{item.username}</Text>
-          <Text note>Doing what you like will always keep you happy . .</Text>
+          <Text note>{item.lastMessage}...</Text>
       </Body>
       <Right>
           <Text note>3:43 pm</Text>
@@ -72,7 +83,7 @@ export default class Chat extends Component {
     return (
       <View style={{flex:1, backgroundColor:'#FFF'}}>
         <FlatList
-          data={ListChat.slice(0, this.state.limit)}
+          data={this.state.fakeData.slice(0, this.state.limit)}
           renderItem={this.renderRow}
           keyExtractor={this._keyExtractor}
           ListHeaderComponent={InputSearch}
