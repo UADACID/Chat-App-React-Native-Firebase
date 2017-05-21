@@ -15,7 +15,10 @@ export default class InputSearch extends Component {
         <Item
           style={{height:40, backgroundColor:'#FFF', marginRight:5, marginLeft:5}}
           rounded>
-            <Input placeholder='Rounded Textbox'/>
+            <Input
+              style={{marginLeft:10}}
+              placeholderTextColor='#DADFE1'
+              placeholder='Search chat'/>
             <Ionicons name='ios-close' style={{marginRight:15}} size={30} color='#000'/>
         </Item>
       </View>

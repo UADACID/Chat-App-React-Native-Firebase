@@ -36,6 +36,8 @@ export default class Chat extends Component {
   });
 
   componentWillMount(){
+    var data = [...Array(10).keys()];
+    console.log(data);
     // console.log(faker.name.findName());
     for (var i = 0; i < 100; i++) {
       ListChat.push({
